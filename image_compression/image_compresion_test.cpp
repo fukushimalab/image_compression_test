@@ -24,6 +24,7 @@ using namespace std;
 #define TEST_first 1
 #define TEST_first_demo	0
 
+
 std::random_device rd;
 std::mt19937 gen(rd());
 
@@ -58,36 +59,36 @@ int main()
 
 	vector<string> in_str = { "Not the same","    Same" };
 
-	int count[16][7][4];
-	for (int i = 0; i < 16; i++) {
-		for (int j = 0; j < 7; j++) {
+	int count[10][5][4];
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 5; j++) {
 			for (int k = 0; k < 4; k++) {
 				count[i][j][k] = -1;
 			}
 		}
 	}
 
-	int count_first[4][7][4];
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 7; j++) {
+	int count_first[10][5][4];
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 5; j++) {
 			for (int k = 0; k < 4; k++) {
 				count_first[i][j][k] = -1;
 			}
 		}
 	}
 
-	int flag[16][7][4];
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 7; j++) {
+	int flag[10][5][4];
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 5; j++) {
 			for (int k = 0; k < 4; k++) {
 				count_first[i][j][k] = -1;
 			}
 		}
 	}
 
-	int flag_first[4][7][4];
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 7; j++) {
+	int flag_first[10][5][4];
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 5; j++) {
 			for (int k = 0; k < 4; k++) {
 				count_first[i][j][k] = -1;
 			}
@@ -209,17 +210,19 @@ int main()
 	
 	now_t = chrono::system_clock::now().time_since_epoch().count();
 
+
+
 	
 #if TEST_first
 	//‰æ‘œ‘I‘ð
 	i = 0;
 	now_t = chrono::system_clock::now().time_since_epoch().count();
-	while (i < 112 && key != 'q')
+	while (i < 200 && key != 'q')
 	{
 		key = -1;
 		jnd = -1;
-		kodim_num = random(1, 4);
-		quality = random(2, 8);
+		kodim_num = random(1, 10);
+		quality = random(5, 9);
 		filter_strength = random(0, 3);
 		t = 12;
 
@@ -227,7 +230,7 @@ int main()
 
 
 
-		if (count_first[kodim_num - 1][quality - 2][filter_strength] == -1)
+		if (count_first[kodim_num - 1][quality - 5][filter_strength] == -1)
 		{
 
 			if (filter_strength == 0)
@@ -240,7 +243,7 @@ int main()
 			}
 			else if (filter_strength == 2)
 			{
-				filter_strength_conv = 100;
+				filter_strength_conv = 2015;
 			}
 			else if (filter_strength == 3)
 			{
@@ -252,7 +255,27 @@ int main()
 
 			quality_mul = quality * 10;
 
-			String str = format("./kodak_comp_img_first/kodim%d_gray_%d_%d_first.png", kodim_num, quality_mul, filter_strength_conv);
+			if (filter_strength_conv == 2015)
+			{
+				if (quality_mul == 60)
+				{
+					quality_mul = 30;
+				}
+				else if (quality_mul == 70)
+				{
+					quality_mul = 35;
+				}
+				else if (quality_mul == 80)
+				{
+					quality_mul = 40;
+				}
+				else if (quality_mul == 90)
+				{
+					quality_mul = 45;
+				}
+			}
+
+			String str = format("./kodak_comp_gray_200/kodim%d_gray_%d_%d.png", kodim_num, quality_mul, filter_strength_conv);
 			src = imread(str, 0);
 			cv::namedWindow("test");
 			cv::moveWindow("test", 700, 400);
@@ -301,19 +324,19 @@ int main()
 
 
 
-			count_first[kodim_num - 1][quality - 2][filter_strength] = jnd;
+			count_first[kodim_num - 1][quality - 5][filter_strength] = jnd;
 			string str1 = format("kodim%d_%d_%d", kodim_num, quality * 10, filter_strength);
 			backup << str1 << "," << jnd << "," << endl;
 			i++;
-			flag_first[kodim_num - 1][quality - 2][filter_strength] = i;
+			flag_first[kodim_num - 1][quality - 5][filter_strength] = i;
 			cout << i << endl;
-			cout << flag_first[kodim_num - 1][quality - 2][filter_strength] << endl;
-			cout << "kodim_num-1" << "," << kodim_num - 1 << "," << "quality " << "," << quality - 2 << "," << "filter_strength" << filter_strength << "," << endl;
- 			cout << count_first[kodim_num - 1][quality - 2][filter_strength] << endl;
+			cout << flag_first[kodim_num - 1][quality - 5][filter_strength] << endl;
+			cout << "kodim_num-1" << "," << kodim_num - 1 << "," << "quality " << "," << quality - 5 << "," << "filter_strength" << filter_strength << "," << endl;
+ 			cout << count_first[kodim_num - 1][quality - 5][filter_strength] << endl;
 			destroyWindow("test");
 
 
-			if (i == 112)
+			if (i == 100||i==200)
 			{
 				while (key != 's')
 				{
@@ -345,12 +368,12 @@ int main()
 	//‰æ‘œ‘I‘ð
 	i = 0;
 	now_t = chrono::system_clock::now().time_since_epoch().count();
-	while (i < 448 && key != 'q')
+	while (i < 200 && key != 'q')
 	{
 		key = -1;
 		jnd = -1;
-		kodim_num = random(1, 16);
-		quality = random(2, 8);
+		kodim_num = random(1, 10);
+		quality = random(2, 6);
 		filter_strength = random(0, 3);
 		t = 12;
 
@@ -371,7 +394,7 @@ int main()
 			}
 			else if (filter_strength == 2)
 			{
-				filter_strength_conv = 100;
+				filter_strength_conv = 2015;
 			}
 			else if (filter_strength == 3)
 			{
@@ -383,7 +406,19 @@ int main()
 
 			quality_mul = quality * 10;
 
-			String str = format("./kodak_comp_img/kodim%d_gray_%d_%d.png", kodim_num, quality_mul, filter_strength_conv);
+			if (filter_strength_conv == 2015)
+			{
+				if (quality_mul == 50)
+				{
+					quality_mul = 25;
+				}
+				else if (quality_mul == 60)
+				{
+					quality_mul = 35;
+				}
+			}
+
+			String str = format("./kodak_comp_gray_100/kodim%d_gray_%d_%d.png", kodim_num, quality_mul, filter_strength_conv);
 			src = imread(str, 0);
 			cv::namedWindow("test");
 			cv::moveWindow("test", 700, 400);
@@ -411,6 +446,8 @@ int main()
 				{
 					exit(0);
 				}
+
+
 
 				string text = (jnd != -1) ? in_str[jnd] : "";
 				string request = (jnd == -1) ? "Please enter your answer." : "";
@@ -441,7 +478,7 @@ int main()
 			destroyWindow("test");
 
 
-			if (i == 112 || i == 224 || i==336)
+			if (i == 100 )
 			{
 				while (key != 's')
 				{
@@ -468,34 +505,54 @@ int main()
 	std::ofstream fout("test.csv");
 
 	string str;
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 10; i++)
 	{
-		for (int j = 0; j < 7; j++)
+		for (int j = 0; j < 5; j++)
 		{
 			cout << flag_first[i][j][0] << endl;
-			str = format("kodim%d_%d", i + 1, (j + 2) * 10);
-			fout << str << "," << flag_first[i][j][0] << "," <<count_first[i][j][0] << "," << flag_first[i][j][1] << "," << count_first[i][j][1] << "," << flag_first[i][j][2] << "," << count_first[i][j][2] << "," << flag_first[i][j][3] << "," << count_first[i][j][3] << "," << endl;
+			str = format("kodim%d_%d", i + 1, (j + 5) * 10);
+			fout << str <<  "," <<count_first[i][j][0] <<  "," << count_first[i][j][1]  << "," << count_first[i][j][2] <<  "," << count_first[i][j][3] << "," << endl;
 
 		}
 	}
 
-	
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 10; i++)
 	{
-		for (int j = 0; j < 7; j++)
+		for (int j = 0; j < 5; j++)
+		{
+			cout << flag_first[i][j][0] << endl;
+			str = format("kodim%d_%d", i + 1, (j + 5) * 10);
+			fout << str << "," << flag_first[i][j][0] <<  "," << flag_first[i][j][1]  << "," << flag_first[i][j][2] << "," << flag_first[i][j][3] << "," << endl;
+
+		}
+	}
+	
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 5; j++)
 		{
 			str = format("kodim%d_%d", i + 1, (j +2)* 10);
-			fout << str << "," << flag[i][j][0] << "," << count[i][j][0] << "," << flag[i][j][1] << "," << count[i][j][1] << "," << flag[i][j][2] << "," << count[i][j][2] << "," << flag[i][j][3] << "," << count[i][j][3] << "," << endl;
+			fout << str << ","  << count[i][j][0] <<  "," << count[i][j][1] << "," << count[i][j][2] << "," << count[i][j][3] << "," << endl;
 			
 		}
 	}
 
-	int sum1[7][4] = {};
-	int sum0[7][4] = {};
-
-	for (int j = 0; j < 7; j++)
+	for (int i = 0; i < 10; i++)
 	{
-		for (int i = 0; i < 16; i++)
+		for (int j = 0; j < 5; j++)
+		{
+			str = format("kodim%d_%d", i + 1, (j + 2) * 10);
+			fout << str << "," << flag[i][j][0] <<  "," << flag[i][j][1] <<  "," << flag[i][j][2] << "," << flag[i][j][3]  << "," << endl;
+
+		}
+	}
+
+	int sum1[5][4] = {};
+	int sum0[5][4] = {};
+
+	for (int j = 0; j < 5; j++)
+	{
+		for (int i = 0; i < 10; i++)
 		{
 			for (int k = 0; k < 4; k++)
 			{
@@ -511,7 +568,7 @@ int main()
 		}
 	}
 
-	for (int j = 0; j < 7; j++)
+	for (int j = 0; j < 5; j++)
 	{
 		for (int k = 0; k < 4; k++)
 		{
@@ -527,11 +584,6 @@ int main()
 	cv::imshow("finish", finish);
 	waitKey(0);
 	cv::destroyWindow("background");
-
-
-
-
-
 
 	return 0;
 }
