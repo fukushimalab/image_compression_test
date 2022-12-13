@@ -257,21 +257,25 @@ int main()
 
 			if (filter_strength_conv == 2015)
 			{
-				if (quality_mul == 60)
+				if (quality_mul == 50)
 				{
 					quality_mul = 30;
 				}
-				else if (quality_mul == 70)
+				else if (quality_mul == 60)
 				{
 					quality_mul = 35;
 				}
-				else if (quality_mul == 80)
+				else if (quality_mul == 70)
 				{
 					quality_mul = 40;
 				}
-				else if (quality_mul == 90)
+				else if (quality_mul == 80)
 				{
 					quality_mul = 45;
+				}
+				else if (quality_mul == 90)
+				{
+					quality_mul = 50;
 				}
 			}
 
@@ -408,15 +412,44 @@ int main()
 
 			if (filter_strength_conv == 2015)
 			{
-				if (quality_mul == 50)
+				if (quality_mul == 30)
 				{
 					quality_mul = 25;
 				}
-				else if (quality_mul == 60)
+				else if (quality_mul == 40)
+				{
+					quality_mul = 30;
+				}
+				else if (quality_mul == 50)
 				{
 					quality_mul = 35;
 				}
+				else if (quality_mul == 60)
+				{
+					quality_mul = 40;
+				}
 			}
+			if (filter_strength_conv != 2015)
+			{
+				if (quality_mul == 30)
+				{
+					quality_mul = 35;
+				}
+				else if (quality_mul == 40)
+				{
+					quality_mul = 50;
+				}
+				else if (quality_mul == 50)
+				{
+					quality_mul = 60;
+				}
+				else if (quality_mul == 60)
+				{
+					quality_mul = 70;
+				}
+			}
+
+			
 
 			String str = format("./kodak_comp_gray_100/kodim%d_gray_%d_%d.png", kodim_num, quality_mul, filter_strength_conv);
 			src = imread(str, 0);
@@ -531,7 +564,7 @@ int main()
 	{
 		for (int j = 0; j < 5; j++)
 		{
-			str = format("kodim%d_%d", i + 1, (j +2)* 10);
+			str = format("kodim%d_%d", i + 1, j +1);
 			fout << str << ","  << count[i][j][0] <<  "," << count[i][j][1] << "," << count[i][j][2] << "," << count[i][j][3] << "," << endl;
 			
 		}
@@ -541,7 +574,7 @@ int main()
 	{
 		for (int j = 0; j < 5; j++)
 		{
-			str = format("kodim%d_%d", i + 1, (j + 2) * 10);
+			str = format("kodim%d_%d", i + 1, j + 1);
 			fout << str << "," << flag[i][j][0] <<  "," << flag[i][j][1] <<  "," << flag[i][j][2] << "," << flag[i][j][3]  << "," << endl;
 
 		}
